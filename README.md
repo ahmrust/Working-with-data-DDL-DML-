@@ -39,10 +39,25 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 Результатом работы должны быть скриншоты обозначенных заданий, а также простыня со всеми запросами.
 
 Решение 1
-1.1
 
+1.1 Установка mysql
 
-1.2.
+```
+sudo apt update && sudo apt upgrade -y
+sudo apt install mysql-server
+sudo service mysql status
+```
+1.2. Создание учетной записи sys_temp
+```
+mysql -u root -p
+CREATE USER 'sys_temp'@'localhost' identified by 'password';
+```
+![alt text]()
+Запрос получения списка пользователей
+```
+select user from mysql.user;
+```
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/1.png)
 
 
 1.3
@@ -51,11 +66,31 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 1.4
 
 
-1.5
+1.5 Запрос на получение списка прав пользователя sys_temp
+```
+SHOW GRANTS FOR 'sys_temp'@'localhost';
+exit
+```
+![alt text]()
 
 
-1.6
+1.6 Переподключение к базе от имени sys_temp и смена типа аутенфикации
+```
+mysql -u sys_temp -p
+exit
+```
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/3.png)
+```
+mysql -u root -p
+ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+exit
+```
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/4.png)
 
+
+Скачан и восстановлен дамп в базу данных
+
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/5.png)
 
 1.7
 
@@ -66,11 +101,14 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 
 ```
 ```
-![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/1.png)
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/6.png)
 
 ## Задание 2
 Составьте таблицу, используя любой текстовый редактор или Excel, в которой должно быть два столбца: в первом должны быть названия таблиц восстановленной базы, во втором 
 названия первичных ключей этих таблиц. Пример: (скриншот/текст)
+
+Название таблицы | Название первичного ключа
+customer         | customer_id
 
 Решение 2
 
@@ -104,8 +142,6 @@ store                        | store_id
 ![alt text]()
 
 
-Название таблицы | Название первичного ключа
-customer         | customer_id
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
