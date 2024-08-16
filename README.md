@@ -3,10 +3,10 @@
 1. Сделайте fork репозитория c шаблоном решения к себе в Github и переименуйте его по названию или номеру занятия, например, https://github.com/имя-вашего-репозитория/gitlab-hw или https://github.com/имя-вашего-репозитория/8-03-hw).
 2. Выполните клонирование этого репозитория к себе на ПК с помощью команды git clone.
 3. Выполните домашнее задание и заполните у себя локально этот файл README.md:
-впишите вверху название занятия и ваши фамилию и имя;
-в каждом задании добавьте решение в требуемом виде: текст/код/скриншоты/ссылка;
-для корректного добавления скриншотов воспользуйтесь инструкцией «Как вставить скриншот в шаблон с решением»;
-при оформлении используйте возможности языка разметки md. Коротко об этом можно посмотреть в инструкции по MarkDown.
+- впишите вверху название занятия и ваши фамилию и имя;
+- в каждом задании добавьте решение в требуемом виде: текст/код/скриншоты/ссылка;
+- для корректного добавления скриншотов воспользуйтесь инструкцией «Как вставить скриншот в шаблон с решением»;
+- при оформлении используйте возможности языка разметки md. Коротко об этом можно посмотреть в инструкции по MarkDown.
 4. После завершения работы над домашним заданием сделайте коммит (git commit -m "comment") и отправьте его на Github (git push origin).
 5. Для проверки домашнего задания преподавателем в личном кабинете прикрепите и отправьте ссылку на решение в виде md-файла в вашем Github.
 6. Любые вопросы задавайте в чате учебной группы и/или в разделе «Вопросы по заданию» в личном кабинете.
@@ -40,46 +40,51 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 
 Решение 1
 
-1.1 Установка mysql
+Установлена mysql
 
 ```
 sudo apt update && sudo apt upgrade -y
 sudo apt install mysql-server
 sudo service mysql status
 ```
-1.2. Создание учетной записи sys_temp
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/9.png)
+
+Создание учетной записи sys_temp
 ```
 mysql -u root -p
 CREATE USER 'sys_temp'@'localhost' identified by 'password';
 ```
 ![alt text]()
+
 Запрос получения списка пользователей
 ```
 select user from mysql.user;
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/1.png)
 
+Наделение привелегиями sys_temp
+```
+grant all privileges on *.* to 'sys_temp'@'localhost' with grant option;
+flush privileges;
+```
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/2.png)
 
-1.3
-
-
-1.4
-
-
-1.5 Запрос на получение списка прав пользователя sys_temp
+Запрос на получение списка прав пользователя sys_temp
 ```
 SHOW GRANTS FOR 'sys_temp'@'localhost';
 exit
 ```
-![alt text]()
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/7.png)
 
-
-1.6 Переподключение к базе от имени sys_temp и смена типа аутенфикации
+Переподключение к базе от имени sys_temp
 ```
 mysql -u sys_temp -p
 exit
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/3.png)
+
+Смена типа аутенфикаци
+
 ```
 mysql -u root -p
 ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
@@ -87,19 +92,22 @@ exit
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/4.png)
 
-
 Скачан и восстановлен дамп в базу данных
+```
+wget https://downloads.mysql.com/docs/sakila-db.zip
 
+unzip sakila-db.zip
+mysql -p -h 127.0.0.1 -P 3306 -u sys_temp -p < sakila-db/sakila-schema.sql
+mysql -p -h 127.0.0.1 -P 3306 -u sys_temp -p < sakila-db/sakila-data.sql
+```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/5.png)
 
-1.7
-
-
-1.8
-
-
-
+1.8 Сформирована ER-диаграмма получившейся базы данных, получены все таблицы базы данных
 ```
+mysql -u sys_temp -p
+show databases;
+use sakila;
+show tables;
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/6.png)
 
@@ -139,8 +147,6 @@ film_list                    |
 store                        | store_id
 
 ```
-![alt text]()
-
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
