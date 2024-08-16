@@ -54,7 +54,7 @@ sudo service mysql status
 mysql -u root -p
 CREATE USER 'sys_temp'@'localhost' identified by 'password';
 ```
-![alt text]()
+![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/7.png)
 
 Запрос получения списка пользователей
 ```
@@ -84,7 +84,6 @@ exit
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/3.png)
 
 Смена типа аутенфикаци
-
 ```
 mysql -u root -p
 ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
@@ -102,12 +101,18 @@ mysql -p -h 127.0.0.1 -P 3306 -u sys_temp -p < sakila-db/sakila-data.sql
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/5.png)
 
-1.8 Сформирована ER-диаграмма получившейся базы данных, получены все таблицы базы данных
+Сформирована ER-диаграмма получившейся базы данных, получены все таблицы базы данных
 ```
 mysql -u sys_temp -p
 show databases;
 use sakila;
 show tables;
+```
+Для подключения к базе данных через dbeaver
+```
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+bind-address            = 0.0.0.0
+sudo systemctl restart mysql.service
 ```
 ![alt text](https://github.com/ahmrust/Working-with-data-DDL-DML-/blob/main/img/6.png)
 
@@ -157,3 +162,4 @@ store                        | store_id
 3.2. Выполните запрос на получение списка прав для пользователя sys_temp. (скриншот)
 
 Результатом работы должны быть скриншоты обозначенных заданий, а также простыня со всеми запросами.
+
